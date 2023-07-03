@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Forum;
+use App\Http\Requests\StoreRequest;
 
 
 class ForumController extends Controller
@@ -29,7 +30,7 @@ class ForumController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Forum $forum)
+    public function store(StoreRequest $request, Forum $forum)
     {
         $data = $request->all();
         $data['status'] = 'a';

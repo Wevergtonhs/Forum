@@ -7,6 +7,13 @@
     @endif
 </h1>
 
+@if ($errors->any)
+@foreach ($errors->all() as $error)
+    {{ $error}} <br>
+@endforeach
+    
+@endif
+
 @if (!isset($topic))
     <form action="{{ route('forum.store') }}" method="POST">
 @else
