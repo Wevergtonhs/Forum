@@ -32,7 +32,7 @@ class ForumController extends Controller
      */
     public function store(StoreRequest $request, Forum $forum)
     {
-        $data = $request->all();
+        $data = $request->validated();
         $data['status'] = 'a';
         
         $topic = $forum->create($data);
@@ -69,16 +69,13 @@ class ForumController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreRequest $request, string $id)
     {
         if(!$topic = Forum::find($id)){
             return back();
         }
         
-        $topic->update($request->only([
-            'subject',
-            'body',
-        ]));
+        $topic->update($request->validated());
 
         
 
