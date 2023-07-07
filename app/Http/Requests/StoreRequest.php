@@ -38,12 +38,10 @@ class StoreRequest extends FormRequest
         ];
 
             if ($this->method() === 'PUT') {
-                $rules = [
-                    'subject' => [
+                $rules['subject'] = [
                     'required',
                     'min:3',
                     Rule::unique('forums')->ignore($this->id),                    
-                    ],
                 ];
             }
 

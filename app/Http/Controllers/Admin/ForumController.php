@@ -6,16 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Forum;
 use App\Http\Requests\StoreRequest;
+use App\Services\ForumService;
 
 
 class ForumController extends Controller
 {
+
+    public function __construct(
+        protected ForumService $service 
+        ){}
+
     /**
      * Display a listing of the resource.
      */
-    public function index(Forum $forum)
+    public function index(Request $request)
     {
-        $forums = $forum->all();
+        $forums = $this->service->getAll($request->filter);
+        
         return view('admin/forum/index', compact('forums'));
     }
 
@@ -37,7 +44,7 @@ class ForumController extends Controller
         
         $topic = $forum->create($data);
 
-        return redirect(route('forum.index'));
+        return redirect()->route('forum.index');
         
     }
 
@@ -47,7 +54,11 @@ class ForumController extends Controller
     public function show(string $id)
     {
         
-        if (!$topic = Forum::find($id)) {
+        // if (!$topic = Forum::find($id)) {
+        //     return back();
+        // }
+
+        if (!$topic = $this->service->findOne($id)) {
             return back();
         }
 
@@ -59,7 +70,10 @@ class ForumController extends Controller
      */
     public function edit(string $id)
     {
-        if (!$topic = Forum::find($id)) {
+        // if (!$topic = Forum::find($id)) {
+        //     return back();
+        // }
+        if (!$topic = $this->service->findOne($id)) {
             return back();
         }
 
@@ -88,11 +102,11 @@ class ForumController extends Controller
      */
     public function destroy(string $id)
     {
-        if(!$topic = Forum::find($id)){
-            return back();
-        }
+        // if(!$topic = Forum::find($id)){
+        //     return back();
+        // }
 
-        $topic->delete();
+        $this->service->delete($id); 
         return redirect()->route('forum.index');
     }
 }
