@@ -20,32 +20,15 @@ class ForumService {
         return $this->repository->findOne($id);
     }
 
-    public function create(
-        string $subject,
-        string $status,
-        string $body,
-    ): stdClass|null 
+    public function create(CreateForumDTO $dto): stdClass|null 
     {
-        return $this->repository->create(
-           $subject,
-           $status,
-           $body,
-        );
+        return $this->repository->create($dto);
     }
 
-    public function update(
-        string $id,
-        string $subject,
-        string $status,
-        string $body,
+    public function update(UpdateForumDTO $dto
     ): stdClass|null
     {
-        return $this->repository->update(
-           $id,
-           $subject,
-           $status,
-           $body,
-        );
+        return $this->repository->update($dto);
     }
 
     public function delete(string $id): void

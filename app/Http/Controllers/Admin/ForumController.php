@@ -37,12 +37,11 @@ class ForumController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request, Forum $forum)
+    public function store(CreateForumDTO $request)
     {
-        $data = $request->validated();
-        $data['status'] = 'a';
-        
-        $topic = $forum->create($data);
+        $this->service->new(
+            CreateForumDTO::makeFromRequest()
+        );
 
         return redirect()->route('forum.index');
         
@@ -85,15 +84,15 @@ class ForumController extends Controller
      */
     public function update(StoreRequest $request, string $id)
     {
-        if(!$topic = Forum::find($id)){
+        $topic = $this->service->new(
+            UpdateForumDTO::makeFromRequest()
+        );
+        
+        if(!$topic){
             return back();
         }
-        
-        $topic->update($request->validated());
 
-        
-
-        return redirect()->route('forum.index', compact('topic'))->with('Topic updated.');
+        return redirect()->route('forum.index', compact('topic'));
 
     }
 
