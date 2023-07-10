@@ -2,13 +2,18 @@
 
 namespace App\Services;
 
+use App\DTO\{
+    CreateFortumDTO,
+    UpdateForumDTO,
+};
+use App\Repositories\ForumRepositoryInterface;
+use stdClass;
+
 class ForumService {
 
-    protected $repository;
-
-    public function __contruct() {
-
-    }
+    public function __construct(
+        protected ForumRepositoryInterface $repository,
+    ) {}
 
     public function getAll(string $filter = null): array 
     {

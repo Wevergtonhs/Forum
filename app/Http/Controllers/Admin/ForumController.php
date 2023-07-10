@@ -39,7 +39,7 @@ class ForumController extends Controller
      */
     public function store(CreateForumDTO $request)
     {
-        $this->service->new(
+        $this->service->create(
             CreateForumDTO::makeFromRequest()
         );
 
@@ -84,7 +84,7 @@ class ForumController extends Controller
      */
     public function update(StoreRequest $request, string $id)
     {
-        $topic = $this->service->new(
+        $topic = $this->service->update(
             UpdateForumDTO::makeFromRequest()
         );
         

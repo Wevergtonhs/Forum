@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\ForumRepositoryInterface;
+use App\Repositories\ForumEloquentORM;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->bind(
+            ForumRepositoryInterface::class, 
+            ForumEloquentORM::class);
     }
 }
