@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Forum;
 use App\Http\Requests\StoreRequest;
+use App\Models\Forum;
 use App\Services\ForumService;
+use App\DTO\CreateForumDTO;
+use App\DTO\UpdateForumDTO;
+use stdClass;
 
 
 class ForumController extends Controller
@@ -31,20 +34,23 @@ class ForumController extends Controller
      */
     public function create()
     {
-        return view('admin/forum/create');
+        return view('admin/forum/form');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(CreateForumDTO $request)
-    {
-        $this->service->create(
-            CreateForumDTO::makeFromRequest()
+    {  
+        $topic = $this->service->create(
+            CreateForumDTO::makeFromRequest($request)
         );
-
-        return redirect()->route('forum.index');
         
+        if (!$topic) {
+            return back();
+        }
+    
+        return redirect()->route('forum.index')->with('success', 'Topic add successfully');
     }
 
     /**
@@ -76,7 +82,7 @@ class ForumController extends Controller
             return back();
         }
 
-        return view('admin/forum/create', compact('topic'));
+        return view('admin/forum/form', compact('topic'));
     }
 
     /**
@@ -84,16 +90,17 @@ class ForumController extends Controller
      */
     public function update(StoreRequest $request, string $id)
     {
+
         $topic = $this->service->update(
-            UpdateForumDTO::makeFromRequest()
+            UpdateForumDTO::makeFromRequest($request)
         );
         
-        if(!$topic){
+        if (!$topic) {
             return back();
         }
-
-        return redirect()->route('forum.index', compact('topic'));
-
+    
+        return redirect()->route('forum.index')->with('success', 'Topic updated successfully');
+    
     }
 
     /**

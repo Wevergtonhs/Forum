@@ -2,7 +2,8 @@
 
 namespace App\DTO;
 
-use App\Http\Requests\StoreRquest;
+use App\Http\Requests\StoreRequest;
+use App\Services\ForumService;
 
 class CreateForumDTO
 {
@@ -12,7 +13,7 @@ class CreateForumDTO
         public string $body,
     ) { }
 
-    public static function makeFromRequest(StoreRequest $request)
+    public static function makeFromRequest(StoreRequest $request): self
     {
         return new self(
             $request->subject,
@@ -20,6 +21,4 @@ class CreateForumDTO
             $request->body,
         );
     }
-
-
 }

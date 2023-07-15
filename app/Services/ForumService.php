@@ -2,11 +2,10 @@
 
 namespace App\Services;
 
-use App\DTO\{
-    CreateFortumDTO,
-    UpdateForumDTO,
-};
+
 use App\Repositories\ForumRepositoryInterface;
+use App\DTO\CreateForumDTO;
+use App\DTO\UpdateForumDTO;
 use stdClass;
 
 class ForumService {
@@ -30,8 +29,7 @@ class ForumService {
         return $this->repository->create($dto);
     }
 
-    public function update(UpdateForumDTO $dto
-    ): stdClass|null
+    public function update(UpdateForumDTO $dto): stdClass|null
     {
         return $this->repository->update($dto);
     }

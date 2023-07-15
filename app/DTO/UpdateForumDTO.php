@@ -2,7 +2,8 @@
 
 namespace App\DTO;
 
-use App\Http\Requests\StoreRquest;
+use App\Http\Requests\StoreRequest;
+use App\Services\ForumService;
 
 class UpdateForumDTO
 {
@@ -13,7 +14,7 @@ class UpdateForumDTO
         public string $body,
     ) { }
 
-    public static function makeFromRequest(StoreRequest $request)
+    public static function makeFromRequest(StoreRequest $request): self
     {
         return new self(
             $request->id,
