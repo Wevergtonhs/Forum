@@ -14,6 +14,20 @@ class ForumEloquentORM implements ForumRepositoryInterface {
         protected Forum $model
     ) {}
 
+    public function paginate(int $page = 1, $totalPerPage = 10, string $filter = null) : PaginateInterface
+    {
+        $result = $this->model
+            ->where(function($query) use($filter) {
+                if($filter){
+                    $query->where('subject', 'like', "%{$filter}%");
+                    $query->orWhere('body', 'like', "%{$filter}%");
+                }
+            })
+            ->paginate($totalPerPage, "*", 'page', $page);
+dd(new PaginatePresenter($result));
+            return new PaginatePresenter($result);
+    }
+
     public function getAll(string $filter = null) : array
     {
         return $this->model

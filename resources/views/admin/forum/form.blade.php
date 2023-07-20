@@ -16,9 +16,9 @@
 
 @csrf
 
-<input name="subject" id="" type="text" placeholder="Subject" value="{{ $topic->subject ?? '' }}"> 
+<input name="subject" id="" type="text" placeholder="Subject" value="{{ $topic->subject ?? old('subject') }}"> 
 
-<textarea name="body" id="" cols="30" rows="10" placeholder="Description">{{ $topic->body ?? '' }}</textarea>
+<textarea name="body" id="" cols="30" rows="10" placeholder="Description">{{ $topic->body ?? old('body') }}</textarea>
 <button type="submit"> Send </button>
 
 </form>
